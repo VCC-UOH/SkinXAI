@@ -9,13 +9,17 @@
 
 ## 🎬 Execution & Demonstration Video
 
-> Video proof showcasing training pipeline, execution results, (Grad-CAM) evaluation:
+> Video proof showcasing training pipeline, execution results, and Explainable AI (Grad-CAM) evaluation:
 
-<div align="center">
-  <video src="sha256:bbb97dc7908190277961ae1089abd6f6afab9b8e8cebf2b76f23cf2b15d4ad36" controls="controls" width="100%">
-    Your browser does not support playing video directly.
-  </video>
-</div>
+<p align="center">
+  <a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin-Cancer-Classification-XAI/releases/download/v1.0.0/hanan.mp4">
+    <img src="https://img.shields.io/badge/▶️_WATCH_DEMO_VIDEO-77_MB_MP4_Execution_Proof-FF0000?style=for-the-badge&logo=github&logoColor=white" alt="Watch Execution Video">
+  </a>
+</p>
+
+<p align="center">
+  <i>👉 <b><a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin-Cancer-Classification-XAI/releases/download/v1.0.0/hanan.mp4">Click here to download/view the full execution video (hanan.mp4)</a></b></i>
+</p>
 
 ---
 
@@ -38,6 +42,29 @@ All training and evaluation scripts are available in the [`source_code/`](source
 | **EfficientNetV2-L** | [`training_efficientnetv2_l.py`](source_code/training_efficientnetv2_l.py) | Compound-scaled ConvNet |
 | **InceptionV3** | [`training_inceptionv3.py`](source_code/training_inceptionv3.py) | Multi-scale factorized convolutions |
 | **ResNet152V2** | [`training_resnet152v2.py`](source_code/training_resnet152v2.py) | Deep residual skip-connection network |
+
+---
+
+## 🛠️ Advanced Training Methodology & Engineering Highlights
+
+Our pipeline incorporates several research-grade optimizations and engineering practices:
+
+### 1. 🔄 Two-Phase Transfer Learning Strategy
+To maintain feature stability and prevent catastrophic forgetting of ImageNet representations:
+* **Phase 1 (Head Warmup):** Pre-trained backbones are frozen, training only the classification head for 20 epochs using an initial learning rate ($\eta = 1 \times 10^{-4}$).
+* **Phase 2 (Structural Fine-Tuning):** Deep feature blocks (e.g., Layer $140+$ in ResNet152V2) are unfrozen and fine-tuned at a lower learning rate ($\eta = 1 \times 10^{-6}$) up to epoch 50 to specialize representations for dermatoscopic images.
+
+### 2. ⚡ High-Performance `tf.data` Pipeline
+* **Real-time Data Augmentation:** On-the-fly horizontal/vertical flips, rotation ($\pm 20\%$), and zoom ($\pm 10\%$).
+* **Asynchronous I/O Optimization:** Prefetching (`prefetch(tf.data.AUTOTUNE)`) and parallel mapping prevent CPU-GPU bottlenecks.
+* **Hardware Adaptation:** Tuned batch size of $8$ to maximize throughput under hardware-constrained VRAM conditions ($<3\text{ GB}$) while maintaining gradient stability.
+
+### 3. 🎯 Uncertainty Quantification (UQ) Ready
+* Top layers feature dedicated dropout units (`Dropout_for_UQ` at $p = 0.5$) enabling **Monte Carlo (MC) Dropout** at inference time to compute epistemic uncertainty bounds for clinical decision support.
+
+### 4. 📈 Dynamic Callbacks & Monitoring
+* **CSV Logging & Checkpointing:** Continuous metric logging and automatic model saving based on minimum `val_loss`.
+* **Early Stopping:** Configured with `patience=10` and best weight restoration to guarantee convergence without overfitting.
 
 ---
 
@@ -95,8 +122,10 @@ All raw high-resolution output figures are stored in the [`results/`](results/) 
 
 ---
 
-## 🚀 Environment Requirements
-To run any script in `source_code/`:
+## 🚀 Quick Start & Environment Requirements
+
+### Prerequisites
+Install the required dependencies via `pip`:
 
 ```bash
 pip install tensorflow numpy matplotlib scikit-learn opencv-python
