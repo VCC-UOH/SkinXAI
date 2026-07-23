@@ -12,13 +12,13 @@
 > Video proof showcasing training pipeline, execution results, and Explainable AI (Grad-CAM) evaluation:
 
 <p align="center">
-  <a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin-Cancer-Classification-XAI/releases/download/v1.0.0/hanan.mp4">
+  <a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin_Cancer_Classification/releases/tag/v1.0.0">
     <img src="https://img.shields.io/badge/▶️_WATCH_DEMO_VIDEO-77_MB_MP4_Execution_Proof-FF0000?style=for-the-badge&logo=github&logoColor=white" alt="Watch Execution Video">
   </a>
 </p>
 
 <p align="center">
-  <i>👉 <b><a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin-Cancer-Classification-XAI/releases/download/v1.0.0/hanan.mp4">Click here to download/view the full execution video (hanan.mp4)</a></b></i>
+  <i>👉 <b><a href="https://github.com/Syed-Abdul-Hanan-Hashmi/Skin_Cancer_Classification/releases/tag/v1.0.0">Click here to download/view the full execution video (hanan.mp4)</a></b></i>
 </p>
 
 ---
