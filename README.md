@@ -1,4 +1,4 @@
-# SkinXAI: Explainable Skin Lesion Classification
+# SkinXAI: Explainable AI for Skin Lesion Classification
 
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-FF6F00?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
@@ -31,46 +31,56 @@ The experiments use **30,000 dermoscopic images** curated from the ISIC Archive 
 
 ---
 
-## Methodology
+## 💻 Source Code & Model Architectures
 
-Five ImageNet-pretrained architectures use a two-phase transfer learning strategy.
+Training and evaluation scripts for all six architectures are available in the [`source_code/`](source_code/) directory.
 
-### Phase 1: Classification Head Training
-
-- Frozen pretrained backbone
-- Epochs 1–20
-- Learning rate: `1e-4`
-
-### Phase 2: Selective Fine-Tuning
-
-- Selected deeper layers unfrozen
-- Epochs 21–50
-- Learning rate: `1e-6`
-
-The **Custom CNN** is trained from scratch as a lightweight baseline.
-
-All experiments use `224 × 224` images, categorical cross-entropy loss, Adam optimization, and a batch size of 8.
-
-**Grad-CAM** is used to provide qualitative visual interpretation of model predictions and compare spatial attention patterns across architectures.
+| Architecture | Python Script | Description |
+|---|---|---|
+| **Custom CNN** | [`training_cnn.py`](source_code/training_cnn.py) | Regularized CNN trained from scratch |
+| **ConvNeXt-Tiny** | [`training_convext_tiny.py`](source_code/training_convext_tiny.py) | Modern convolutional architecture |
+| **DenseNet121** | [`training_densenet121.py`](source_code/training_densenet121.py) | Dense feature-reuse architecture |
+| **EfficientNetV2-L** | [`training_efficientnetv2_l.py`](source_code/training_efficientnetv2_l.py) | Efficient compound-scaled architecture |
+| **InceptionV3** | [`training_inceptionv3.py`](source_code/training_inceptionv3.py) | Multi-scale convolutional architecture |
+| **ResNet152V2** | [`training_resnet152v2.py`](source_code/training_resnet152v2.py) | Deep residual architecture |
 
 ---
 
-## Source Code
+## 🛠️ Training Pipeline
 
-Training and evaluation scripts are available in the [`source_code/`](source_code/) directory.
+### Two-Phase Transfer Learning
 
-| Architecture | Script |
-|---|---|
-| Custom CNN | [`training_cnn.py`](source_code/training_cnn.py) |
-| ConvNeXt-Tiny | [`training_convext_tiny.py`](source_code/training_convext_tiny.py) |
-| DenseNet121 | [`training_densenet121.py`](source_code/training_densenet121.py) |
-| EfficientNetV2-L | [`training_efficientnetv2_l.py`](source_code/training_efficientnetv2_l.py) |
-| InceptionV3 | [`training_inceptionv3.py`](source_code/training_inceptionv3.py) |
-| ResNet152V2 | [`training_resnet152v2.py`](source_code/training_resnet152v2.py) |
+Five ImageNet-pretrained architectures are trained using a common two-phase transfer learning strategy:
+
+- **Phase 1 — Classification Head Training:** The pretrained backbone is frozen and the classification head is trained for the first 20 epochs using a learning rate of `1e-4`.
+- **Phase 2 — Selective Fine-Tuning:** Selected deeper layers are unfrozen and fine-tuned from epochs 21–50 using a reduced learning rate of `1e-6`.
+
+The **Custom CNN** is trained from scratch for 50 epochs and serves as a lightweight baseline.
+
+### Data Pipeline
+
+- Input resolution: `224 × 224 × 3`
+- Batch size: `8`
+- Optimizer: `Adam`
+- Loss: `Categorical Cross-Entropy`
+- Real-time data augmentation
+- Horizontal and vertical flipping
+- Random rotation and zoom
+- `tf.data` prefetching and parallel mapping
+
+### Training and Monitoring
+
+- CSV-based training logs
+- Model checkpointing based on validation loss
+- Early stopping with best-weight restoration
+- Training and validation metric tracking
+- Grad-CAM generation for qualitative model interpretation
+
+The experiments were conducted under a constrained GPU environment with approximately **2.8 GB VRAM**.
 
 ---
 
-## Experimental Results
+## 📊 Experimental Results
 
 Experimental outputs are available in the [`results/`](results/) directory.
 
@@ -89,7 +99,23 @@ These results provide a common basis for comparing classification performance, c
 
 ---
 
-## Quick Start
+## 🔍 Explainable AI
+
+**Gradient-weighted Class Activation Mapping (Grad-CAM)** is used to visualize image regions contributing to model predictions.
+
+Grad-CAM heatmaps are generated for representative samples from the three lesion categories:
+
+- Benign
+- Benign Keratosis
+- Malignant
+
+The visualizations enable qualitative comparison of spatial attention patterns across the evaluated architectures.
+
+Grad-CAM is used as a qualitative interpretation method and should not be considered direct evidence of clinical correctness.
+
+---
+
+## 🚀 Quick Start
 
 Clone the repository:
 
@@ -114,7 +140,7 @@ Dataset paths should be configured according to the local environment before tra
 
 ---
 
-## Repository Structure
+## 📁 Repository Structure
 
 ```text
 SkinXAI/
@@ -150,7 +176,7 @@ The original images are not redistributed through this repository. Please obtain
 
 ---
 
-## Paper
+## 📄 Paper
 
 This repository accompanies the manuscript:
 
@@ -165,7 +191,7 @@ If you find this work useful, please consider citing it. The citation will be up
   title  = {Explainable Skin Lesion Classification: Comparative Evaluation and Visual Interpretation of Deep CNNs},
   author = {Imran, Sheryar and Hashmi, Syed Abdul Hanan and Khan, Dawar and Bibi, Wafa and Hassan, Muhammad and Wang, Cheng},
   year   = {2026},
-  note   = {Manuscript submitted/to be submitted}
+  note   = {Manuscript submitted for publication}
 }
 ```
 
