@@ -7,8 +7,6 @@
 
 Official implementation of **SkinXAI**, a comparative study of deep CNN architectures for three-class skin lesion classification with Grad-CAM-based explainability.
 
-This repository is maintained by the **Visual Computing Center (VCC), University of Haripur**.
-
 ---
 
 ## Overview
@@ -144,18 +142,6 @@ SkinXAI/
 
 ---
 
-## Paper
-
-This repository accompanies the manuscript:
-
-**Explainable Skin Lesion Classification: Comparative Evaluation and Visual Interpretation of Deep CNNs**
-
-**Authors:** Sheryar Imran, Syed Abdul Hanan Hashmi, Dawar Khan, Wafa Bibi, Muhammad Hassan, and Cheng Wang.
-
-Citation information will be updated upon publication.
-
----
-
 ## Dataset
 
 The dermoscopic images used in this study are derived from the **International Skin Imaging Collaboration (ISIC) Archive**.
@@ -164,14 +150,24 @@ The original images are not redistributed through this repository. Please obtain
 
 ---
 
-## Visual Computing Center
+## Paper
 
-This repository is maintained by the:
+This repository accompanies the manuscript:
 
-**Visual Computing Center (VCC)**  
-**University of Haripur, Pakistan**
+**Explainable Skin Lesion Classification: Comparative Evaluation and Visual Interpretation of Deep CNNs**
 
-https://github.com/VCC-UOH
+**Authors:** Sheryar Imran, Syed Abdul Hanan Hashmi, Dawar Khan, Wafa Bibi, Muhammad Hassan, and Cheng Wang.
+
+If you find this work useful, please consider citing it. The citation will be updated with the final publication details once available.
+
+```bibtex
+@article{imran2026skinxai,
+  title  = {Explainable Skin Lesion Classification: Comparative Evaluation and Visual Interpretation of Deep CNNs},
+  author = {Imran, Sheryar and Hashmi, Syed Abdul Hanan and Khan, Dawar and Bibi, Wafa and Hassan, Muhammad and Wang, Cheng},
+  year   = {2026},
+  note   = {Manuscript submitted/to be submitted}
+}
+```
 
 ---
 
